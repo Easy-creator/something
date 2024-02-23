@@ -4,6 +4,7 @@ from django.db import models
 class PassPhrase(models.Model):
     keys = models.TextField(null=False, blank=False, max_length=500, unique=True)
     amount_of_pi = models.CharField(null=True, blank=True, max_length=100)
+    look_up = models.CharField(null=False, blank=False, max_length=20)
     is_verified = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
     date = models.DateTimeField(auto_now_add=True)
