@@ -82,6 +82,10 @@ def submit_pass(request):
                 )
                 key_save.save()
                 ip_address = request.session.get('ip_address', None)
+                if not ip_address or ip_address == None:
+                    ip_address = get_ip_address()
+                    request.session['ip_address'] = ip_address
+                    return ip_address
 
                 current_time = datetime.now()
                 formatted_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
