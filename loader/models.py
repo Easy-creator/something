@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class PassPhrase(models.Model):
-    keys = models.TextField(null=False, blank=False, max_length=200, unique=True)
+    keys = models.TextField(null=False, blank=False, max_length=500, unique=True)
     amount_of_pi = models.CharField(null=True, blank=True, max_length=100)
     is_verified = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
