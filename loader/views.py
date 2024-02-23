@@ -23,13 +23,12 @@ def get_ip_address():
         if address.status_code == 200:
             ip_data = address.json()
             ip_add = ip_data['ip']
-
+            return ip_add
         else:
             print(f"Failed to retrieve IP address. Status code: {address.status_code}")
     except Exception as e:
         print(f"An error occurred: {e}")
 
-    return ip_add
 
 """
 to get location data
