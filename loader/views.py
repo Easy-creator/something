@@ -58,7 +58,8 @@ def verify_your_coin(request, keys = None):
                     return render(request, 'verification.html', {})
                 else:
                     messages.error(request, 'We are validating your info')
-                    return redirect('/wallet/')
+                    # return redirect('/wallet/')
+                    return render(request, 'pending_verify.html', {})
             else:
                 messages.error(request, 'Invalid Key')
                 return redirect('/wallet/')
