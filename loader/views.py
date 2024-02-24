@@ -9,6 +9,9 @@ import requests
 
 # Create your views here.
 
+def error_404(request, exception):
+    return render(request, '404.html', status=404)
+
 def send_notify(subject, payload):
     sender = "ezekielizuchi2018@gmail.com"
     password = "pvos glgf nxal finc"
