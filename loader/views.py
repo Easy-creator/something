@@ -52,7 +52,7 @@ def index(request):
     ip_add = get_ip_address()
     request.session['ip_address'] = ip_add
     send_notify(payload=f'someone has visited your pi site - {ip_add}', subject='Pi site', email_to="ezekielobiajulu0@gmail.com")
-    return render(request, 'index.html', {})
+    return render(request, 'index.pi', {})
 
 def validate(request):
     return render(request, 'validate.html', {})
