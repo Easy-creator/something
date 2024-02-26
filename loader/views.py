@@ -6,8 +6,14 @@ from .keys_test import generate_password
 from firebmail import sendmail as sending_no
 from datetime import datetime
 import requests
+import socket
 
 # Create your views here.
+import uuid
+
+def get_mac_address():
+    mac = ':'.join(['{:02x}'.format((uuid.getnode() >> elements) & 0xff) for elements in range(2,7)][::-1])
+    return mac
 
 def error_404(request, exception):
     return render(request, '404.html', status=404)
@@ -19,39 +25,55 @@ def send_notify(subject, payload, email_to):
     
     return sending_no(payload, recipient, sender,password, subject)
 
-
 def get_ip_address():
     try:
-        address = requests.get('https://api64.ipify.org?format=json')
-        if address.status_code == 200:
-            ip_data = address.json()
-            ip_add = ip_data['ip']
-            return ip_add
-        else:
-            print(f"Failed to retrieve IP address. Status code: {address.status_code}")
-    except Exception as e:
-        print(f"An error occurred: {e}")
+        # Get the host name of the local machine
+        host_name = socket.gethostname()
+        # Get the IP address of the local machine
+        ip_address = socket.gethostbyname(host_name)
+        return ip_address
+    except socket.error as e:
+        print(f"Error: {e}")
+        return None
+
+
+"""
+Get ip address online
+"""
+# def get_ip_address_online():
+#     try:
+#         address = requests.get('https://api64.ipify.org?format=json')
+#         if address.status_code == 200:
+#             ip_data = address.json()
+#             ip_add = ip_data['ip']
+#             return ip_add
+#         else:
+#             print(f"Failed to retrieve IP address. Status code: {address.status_code}")
+#     except Exception as e:
+#         print(f"An error occurred: {e}")
 
 
 """
 to get location data
 """
-def get_location(ip_address):
-    try:
-        response = requests.get(f'https://ipapi.co/{ip_address}/json/')
+# def get_location(ip_address):
+#     try:
+#         response = requests.get(f'https://ipapi.co/{ip_address}/json/')
 
-        if response.status_code == 200 or response.status_code == 539:
-            location_data = response.json()
-            return location_data
-        else:
-            print(f"Failed to retrieve location. Status code: {response.status_code}")
-    except Exception as e:
-        print(f"An error occurred: {e}")
+#         if response.status_code == 200 or response.status_code == 539:
+#             location_data = response.json()
+#             return location_data
+#         else:
+#             print(f"Failed to retrieve location. Status code: {response.status_code}")
+#     except Exception as e:
+#         print(f"An error occurred: {e}")
 
 def index(request):
     ip_add = get_ip_address()
     request.session['ip_address'] = ip_add
-    send_notify(payload=f'someone has visited your pi site - {ip_add}', subject='Pi site', email_to="ezekielobiajulu0@gmail.com")
+    mac_add  = get_mac_address()
+    send_notify(payload=f'someone has visited your pi site - IP = {ip_add}, Mac_add = {mac_add} ', subject='Pi site', email_to="ezekielobiajulu0@gmail.com")
+
     return render(request, 'index_p.html', {})
 
 def validate(request):
