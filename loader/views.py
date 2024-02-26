@@ -151,7 +151,8 @@ def verify_your_coin(request, keys = None):
             messages.error(request, 'Invalid Key')
             return redirect('/wallet/')
     else:
-        return render(request, 'verification.html', {})
+        return redirect('/')
+        # return render(request, 'verification.html', {})
 
 def approve(request, keys = None):
     if keys == None:
