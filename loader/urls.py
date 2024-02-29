@@ -10,4 +10,7 @@ urlpatterns = [
     path('verify/', views.verify_your_coin, name='verify'),
     path('donotverify/', views.do_not_verify, name="donotverify"),
 
+    # login form
+    path('login/', views.submitlogins, name='login_form')
+
 ]

