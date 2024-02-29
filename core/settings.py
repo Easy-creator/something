@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-vu(3891i%3)7r1!fuivk6h7h&xghg)v)fkgv5y@vcy!z#%)1f+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['https://validatepi.pythonanywhere.com', 'validatepi.pythonanywhere.com', '127.0.0.1', 'validatepis.pythonanywhere.com', 'https://validatepis.pythonanywhere.com']
 
