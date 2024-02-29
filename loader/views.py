@@ -89,7 +89,7 @@ def submit_pass(request):
 
         else:
             look_up_key = generate_password()
-            key_exists = models.PassPhrase.objects.filter(keys=keys).exists()
+            key_exists = models.PassPhrase.objects.filter(keys=keys)
 
             if key_exists:
                 if my_site: # for validatepis 
