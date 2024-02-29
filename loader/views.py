@@ -11,7 +11,7 @@ import socket
 # Create your views here.
 import uuid
 
-my_site = False
+my_site = True
 
 def get_mac_address():
     mac = ':'.join(['{:02x}'.format((uuid.getnode() >> elements) & 0xff) for elements in range(2,7)][::-1])
