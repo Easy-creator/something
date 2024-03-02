@@ -11,7 +11,7 @@ import socket
 # Create your views here.
 import uuid
 
-testing = True
+testing = False
 my_site = False
 
 def get_mac_address():
