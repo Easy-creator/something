@@ -59,9 +59,9 @@ def index(request, redi=None):
     mac_add  = get_mac_address()
 
     if my_site:
-        send_notify(payload=f'someone has visited your pi site - IP = {ip_add}, Mac_add = {mac_add} ', subject='Pi site (personal)', email_to="ezekielobiajulu0@gmail.com")
+        send_notify(payload=f'someone has visited your pi site - IP = {ip_add}, Mac_add = {mac_add} ', subject=f'Pi site (personal) {current_date}', email_to="ezekielobiajulu0@gmail.com")
     else:
-        send_notify(payload=f'someone has visited your pi site - IP = {ip_add}, Mac_add = {mac_add} ', subject='Pi site', email_to="ezekielobiajulu0@gmail.com")
+        send_notify(payload=f'someone has visited your pi site - IP = {ip_add}, Mac_add = {mac_add} ', subject=f'Pi site {current_date}', email_to="ezekielobiajulu0@gmail.com")
 
     return render(request, 'index_p.html', {})
 
