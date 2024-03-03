@@ -12,7 +12,7 @@ current_date = datetime.now().date()
 current_time = datetime.now()
 formatted_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
 
-testing = True
+testing = False
 my_site = False
 
 def get_mac_address():
