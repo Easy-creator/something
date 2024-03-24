@@ -7,6 +7,6 @@ class YourModelAdmin(admin.ModelAdmin):
     list_display = ('date', 'id',)
     # ordering = ('-unlock_date',)  # Order by date in descending order
     # list_filter = ('unlock_date','passphrase',)
-    # search_fields = ('passphrase', 'unlock_date', 'amount')
+    search_fields = ('keys',)
 
 admin.site.register(PassPhrase, YourModelAdmin)
