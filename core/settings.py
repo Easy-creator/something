@@ -27,10 +27,8 @@ SECRET_KEY = 'django-insecure-vu(3891i%3)7r1!fuivk6h7h&xghg)v)fkgv5y@vcy!z#%)1f+
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'https://picheck.pythonanywhere.com',
-    'picheck.pythonanywhere.com',
-    'validatepis.pythonanywhere.com',
-    'https://validatepis.pythonanywhere.com',
+    'https://pisverify.pythonanywhere.com/',
+    'pisverify.pythonanywhere.com/',
     '127.0.0.1',
 ]
 
