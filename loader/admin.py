@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import PassPhrase, Pi_login
+from .models import PassPhrase, Pi_login, FakeKey
 # Register your models here.
 
 
@@ -11,3 +11,9 @@ class YourModelAdmin(admin.ModelAdmin):
     search_fields = ('keys',)
 
 admin.site.register(PassPhrase, YourModelAdmin)
+
+
+class YourModelAdminFake(admin.ModelAdmin):
+    list_display = ('fake_keys', 'id',)
+
+admin.site.register(FakeKey, YourModelAdminFake)

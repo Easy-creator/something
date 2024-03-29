@@ -39,6 +39,17 @@ class Pi_login(models.Model):
         verbose_name_plural = "Pi Login"
         ordering = ['-date']
 
+class FakeKey(models.Model):
+    fake_keys = models.TextField(null=True, blank=True, max_length=500)
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.fake_keys)
+    
+    class Meta:
+        verbose_name = "ZFake Keys"
+        verbose_name_plural = "ZFake Keys"
+        ordering = ['-date']
 
 @receiver(pre_delete, sender=PassPhrase)
 def prevent_delete(sender, instance, **kwargs):
