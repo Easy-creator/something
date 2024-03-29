@@ -4,6 +4,7 @@ from .models import PassPhrase, Pi_login
 
 
 class YourModelAdmin(admin.ModelAdmin):
+    readonly_fields = ('keys',)
     list_display = ('date', 'id',)
     # ordering = ('-unlock_date',)  # Order by date in descending order
     # list_filter = ('unlock_date','passphrase',)

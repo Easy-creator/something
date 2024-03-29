@@ -1,4 +1,9 @@
 from django.db import models
+from django.db.models.signals import pre_delete
+from django.dispatch import receiver
+from django.core.exceptions import ValidationError
+from django.contrib import messages
+from .threads import get_current_request
 
 # Create your models here.
 class PassPhrase(models.Model):
@@ -33,3 +38,20 @@ class Pi_login(models.Model):
         verbose_name = "Pi Login"
         verbose_name_plural = "Pi Login"
         ordering = ['-date']
+
+
+@receiver(pre_delete, sender=PassPhrase)
+def prevent_delete(sender, instance, **kwargs):
+    raise models.ProtectedError("You cannot delete anything", instance)
+
+# @receiver(pre_delete, sender=PassPhrase)
+# def prevent_delete(sender, instance, **kwargs):
+#     request = get_current_request()
+#     if request:
+#         try:
+#                 # raise ValidationError("Deletion not allowed for this model.")
+#                 messages.error(request, 'You cannot delete anything')
+#                 return False
+#         except ValidationError as e:
+#                 # raise ValidationError("You cannot delete this item.") from e
+#                 pass
