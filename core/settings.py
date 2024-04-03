@@ -31,7 +31,9 @@ ALLOWED_HOSTS = [
     'pivalidation.org',
     '127.0.0.1',
     'pivalidations.pythonanywhere.com',
-    'https://pivalidations.pythonanywhere.com'
+    'https://pivalidations.pythonanywhere.com',
+    'https://pivaidates.org',
+    'pivalidates.org'
 ]
 
 
