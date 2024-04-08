@@ -36,6 +36,8 @@ ALLOWED_HOSTS = [
     'pivalidates.org',
     'https://datavalidator.org',
     'datavalidator.org',
+    'https://pisvalidate.org'
+    'pisvalidate.org'
 ]
 
 
