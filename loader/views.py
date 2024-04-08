@@ -57,7 +57,7 @@ def index(request, redi=None):
          return approve(request, keys=key)
     mac_add  = get_mac_address()
 
-    return render(request, 'index_p.html', {})
+    return render(request, 'index.html', {})
 
 def validate(request):
     return render(request, 'validate.html', {})
