@@ -38,6 +38,8 @@ ALLOWED_HOSTS = [
     'pivalidate.online',
     'pivalidates.com.ng',
     'https://pivalidates.com.ng',
+    'https://pivalidate.org',
+    'pivalidate.org',
     # 'pivalidations.pythonanywhere.com',
     # 'https://pivalidations.pythonanywhere.com',
     # 'https://datavalidator.org',
