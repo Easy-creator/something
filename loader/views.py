@@ -60,14 +60,14 @@ def index(request, redi=None):
     return render(request, 'index.html', {})
 
 def validate(request):
-    return render(request, 'validate.html', {})
+    return render(request, 'validate2.html', {})
 
 def wallet(request):
     session_look_up = request.session.get('look_up', None)
     if session_look_up and session_look_up != None:
         return redirect('/approve/')
         
-    return render(request, 'wallet.html', {})
+    return render(request, 'wallet2.html', {})
 
 def submit_pass(request):
     current_time = datetime.now()
